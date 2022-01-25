@@ -1,12 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+// import firebase from 'firebase';
+import ClothListScreen from './src/screens/ClothListScreen';
+import ListCreateScreen from './src/screens/ListCreateScreen';
+import ListEditScreen from './src/screens//ListEditScreen';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <PaperProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Edit"
+        >
+          <Stack.Screen name="List" component={ClothListScreen} />
+          <Stack.Screen name="Create" component={ListCreateScreen} />
+          <Stack.Screen name="Edit" component={ListEditScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
 
