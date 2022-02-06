@@ -1,59 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, TextInput, TouchableOpacity, Alert,
 } from 'react-native';
 import firebase from 'firebase';
-// import PropTypes from 'prop-types';
 
 import Button from '../components/Button';
-import Loading from '../components/Loading';
 import { translateErrors } from '../utils/index';
 
-export default function LoginScreen(props) {
+export default function SignupScreen(props) {
   const { navigation } = props;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-      // ユーザーがログインしていたらListに遷移し、
-      // そうでないなら画面が現れるまでロードする
-      if (user) {
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'Main' }],
-        });
-      } else {
-        setLoading(false);
-      }
-    });
-    return unsubscribe;
-  }, []);
 
   function handlePress() {
-    setLoading(true);
-    firebase.auth().signInWithEmailAndPassword(email, password)
+    firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
         navigation.reset({
           index: 0,
-          routes: [{ name: 'Main' }],
+          routes: [{ name: 'List' }],
         });
       })
       .catch((error) => {
         const errorMsg = translateErrors(error.code);
         Alert.alert(errorMsg.title, errorMsg.description);
-      })
-      .then(() => {
-        setLoading(false);
-      });
+    });
   }
 
   return (
     <View style={styles.container}>
-      <Loading isLoading={isLoading} />
       <View style={styles.inner}>
-        <Text style={styles.title}>Log In</Text>
+        <Text style={styles.title}>Sign Up</Text>
         <TextInput
           style={styles.input}
           value={email}
@@ -78,28 +54,21 @@ export default function LoginScreen(props) {
           onPress={handlePress}
         />
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Not registered?</Text>
+          <Text style={styles.footerText}>Already registered?</Text>
           <TouchableOpacity onPress={() => {
             navigation.reset({
               index: 0,
-              routes: [{ name: 'SignUp' }],
+              routes: [{ name: 'Login' }],
             });
           }}
           >
-            <Text style={styles.footerLink}>Sign up here!</Text>
+            <Text style={styles.footerLink}>Log In.</Text>
           </TouchableOpacity>
         </View>
       </View>
     </View>
   );
 }
-
-// LoginScreen.propTypes = {
-//   navigation: PropTypes.shape({
-//     navigate: PropTypes.func.isRequired,
-//     reset: PropTypes.func.isRequired,
-//   }).isRequired,
-// };
 
 const styles = StyleSheet.create({
   container: {
@@ -115,7 +84,6 @@ const styles = StyleSheet.create({
     lineHeight: 32,
     fontWeight: 'bold',
     marginBottom: 24,
-
   },
   input: {
     fontSize: 16,

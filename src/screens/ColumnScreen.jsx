@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function ClothListScreen() {
+export default function ColumnScreen() {
   return (
     <View style={styles.container}>
-      <Text>List</Text>
+      <Text>Column</Text>
     </View>
   );
 }
