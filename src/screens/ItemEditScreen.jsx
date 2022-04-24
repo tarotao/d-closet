@@ -16,26 +16,67 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
+import {
+  shape,
+  string,
+  number,
+} from 'prop-types';
 import firebase from 'firebase';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 // import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 import { translateErrors } from '../utils';
 
-export default function ItemCreateScreen(props) {
-  const [image, setImage] = useState(null);
-  const [genreValue, setGenreValue] = useState('未選択');
-  const [submitPrice, setSubmitPrice] = useState('0');
-  const [buyDate, setBuyDate] = useState('ー年ー月ー日');
-  const [wearDate, setWearDate] = useState('ー年ー月ー日');
-  const [times, setTimes] = useState(0);
-  const [submitMemo, setSubmitMemo] = useState('未記入');
+export default function ItemEditScreen(props) {
+  const { route } = props;
+  const {
+    id,
+    wImage,
+    wGenre,
+    wBuyDate,
+    wMemo,
+    wPrice,
+    wTimes,
+    wWearDate,
+  } = route.params;
+
+  const [image, setImage] = useState(wImage);
+  const [genreValue, setGenreValue] = useState(wGenre);
+  const [submitPrice, setSubmitPrice] = useState(wPrice);
+  const [buyDate, setBuyDate] = useState(wBuyDate);
+  const [wearDate, setWearDate] = useState(wWearDate);
+  const [times, setTimes] = useState(wTimes);
+  const [submitMemo, setSubmitMemo] = useState(wMemo);
+
+  const deleteItem = (deleteId) => {
+    const { currentUser } = firebase.auth();
+    if (currentUser) {
+      const db = firebase.firestore();
+      const ref = db.collection(`users/${currentUser.uid}/items`).doc(deleteId);
+      Alert.alert('メモを削除します', 'よろしいですか？', [
+        {
+          text: 'キャンセル',
+          onPress: () => {},
+        },
+        {
+          text: '削除する',
+          onPress: () => {
+            ref.delete().catch(() => {
+              Alert.alert('削除に失敗しました');
+            });
+            navigation.navigate('Main');
+          },
+          style: 'destructive',
+        },
+      ]);
+    }
+  };
 
   const submitValue = () => {
     const { currentUser } = firebase.auth();
     const db = firebase.firestore();
-    const ref = db.collection(`users/${currentUser.uid}/items`);
-    ref.add({
+    const ref = db.collection(`users/${currentUser.uid}/items`).doc(id);
+    ref.set({
       image,
       genreValue,
       submitPrice,
@@ -57,7 +98,7 @@ export default function ItemCreateScreen(props) {
       });
   };
   const submitData = () => {
-    if (image != null) {
+    if (image != null && genre !== '未選択') {
       console.log('データを送信しました');
       submitValue();
     } else {
@@ -86,7 +127,7 @@ export default function ItemCreateScreen(props) {
       setImage(result.uri);
     }
   };
-  const [value, setValue] = useState('トップス');
+  const [genre, setGenre] = useState('トップス');
   const [inputMemo, setInputMemo] = useState('');
   const [isVisible, setIsVisible] = useState(false);
   const [priceVisible, setPriceVisible] = useState(false);
@@ -124,7 +165,7 @@ export default function ItemCreateScreen(props) {
 
   const submitGenre = () => {
     mordalHide();
-    setGenreValue(value);
+    setGenreValue(genre);
   };
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -197,7 +238,7 @@ export default function ItemCreateScreen(props) {
                 icon="file-image-outline"
                 style={styles.photoButton}
               />
-              {image && <Image style={styles.photo} source={{ uri: image }} />}
+              {image && <Image style={styles.photo} source={{ uri: image && image }} />}
             </View>
           </View>
           <View style={styles.genrepicker}>
@@ -220,7 +261,7 @@ export default function ItemCreateScreen(props) {
               >
                 <View style={styles.centeredView}>
                   <View style={styles.modalView}>
-                    <RadioButton.Group onValueChange={(newValue) => setValue(newValue)} value={value}>
+                    <RadioButton.Group onValueChange={(newValue) => setGenre(newValue)} value={genre}>
                       <RadioButton.Item label="トップス" value="トップス" />
                       <RadioButton.Item label="ボトムス" value="ボトムス" />
                       <RadioButton.Item label="アウター" value="アウター" />
@@ -378,12 +419,36 @@ export default function ItemCreateScreen(props) {
               />
             </View>
             <Text style={[styles.inputText, styles.memoText]}>{submitMemo}</Text>
+            <Button
+              onPress={() => { deleteItem(id); }}
+              mode="contained"
+              style
+            >
+              削除する
+            </Button>
           </View>
         </View>
       </ScrollView>
     </View>
   );
 }
+
+ItemEditScreen.propTypes = {
+  route: shape({
+    params: shape({
+      id: string,
+      wImage: string,
+      wGenre: string,
+      wBuyDate: string,
+      wMemo: string,
+      wPrice: string,
+      wWearTimes: number,
+    }),
+  }).isRequired,
+//   route: shape({
+//     params: shape({ id: string }),
+//   }).isRequired,
+};
 
 const styles = StyleSheet.create({
   container: {

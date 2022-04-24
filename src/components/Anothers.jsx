@@ -10,11 +10,11 @@ import {
 // import LogoutButton from '../components/LogoutButton';
 import { IconButton } from 'react-native-paper';
 import firebase from 'firebase';
-import Items from '../components/Items';
+import Items from './Items';
 import { translateErrors } from '../utils';
 // import Loading from '../components/Loading';
 
-export default function HomeScreen(props) {
+export default function Anothers(props) {
   const { navigation } = props;
   const [itemList, setItemList] = useState([]);
   const [isLoading, setLoading] = useState(false);
@@ -29,7 +29,7 @@ export default function HomeScreen(props) {
     const db = firebase.firestore();
     const { currentUser } = firebase.auth();
     // .orderByで追加された順でメモを保存する
-    const ref = db.collection(`users/${currentUser.uid}/items`);
+    const ref = db.collection(`users/${currentUser.uid}/items`).where('genreValue', '==', 'その他');
     // メモリストのデータをsnapshotに入れている
     let unsubcrive = () => {};
 
@@ -71,8 +71,21 @@ export default function HomeScreen(props) {
           horizontal
           style={styles.filter}
         >
-          <TouchableOpacity style={styles.filterItem}>
-            <Text style={styles.selected}>全て</Text>
+          <TouchableOpacity
+            style={styles.filterItem}
+            onPress={() => {
+              navigation.navigate('ホーム');
+            }}
+          >
+            <Text style={styles.filterText}>全て</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.filterItem}
+            onPress={() => {
+              navigation.navigate('Anothers');
+            }}
+          >
+            <Text style={styles.selected}>その他</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.filterItem}
@@ -105,14 +118,6 @@ export default function HomeScreen(props) {
             }}
           >
             <Text style={styles.filterText}>シューズ</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.filterItem}
-            onPress={() => {
-              navigation.navigate('Anothers');
-            }}
-          >
-            <Text style={styles.filterText}>その他</Text>
           </TouchableOpacity>
         </ScrollView>
       </View>

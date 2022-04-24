@@ -35,6 +35,7 @@ export default function LoginScreen(props) {
     setLoading(true);
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(() => {
+        // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
         navigation.reset({
           index: 0,
           routes: [{ name: 'Main' }],
@@ -82,7 +83,7 @@ export default function LoginScreen(props) {
           <TouchableOpacity onPress={() => {
             navigation.reset({
               index: 0,
-              routes: [{ name: 'SignUp' }],
+              routes: [{ name: 'Signup' }],
             });
           }}
           >
@@ -93,13 +94,6 @@ export default function LoginScreen(props) {
     </View>
   );
 }
-
-// LoginScreen.propTypes = {
-//   navigation: PropTypes.shape({
-//     navigate: PropTypes.func.isRequired,
-//     reset: PropTypes.func.isRequired,
-//   }).isRequired,
-// };
 
 const styles = StyleSheet.create({
   container: {

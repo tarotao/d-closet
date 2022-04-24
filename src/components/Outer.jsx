@@ -10,11 +10,11 @@ import {
 // import LogoutButton from '../components/LogoutButton';
 import { IconButton } from 'react-native-paper';
 import firebase from 'firebase';
-import Items from '../components/Items';
+import Items from './Items';
 import { translateErrors } from '../utils';
 // import Loading from '../components/Loading';
 
-export default function HomeScreen(props) {
+export default function Outer(props) {
   const { navigation } = props;
   const [itemList, setItemList] = useState([]);
   const [isLoading, setLoading] = useState(false);
@@ -29,7 +29,7 @@ export default function HomeScreen(props) {
     const db = firebase.firestore();
     const { currentUser } = firebase.auth();
     // .orderByで追加された順でメモを保存する
-    const ref = db.collection(`users/${currentUser.uid}/items`);
+    const ref = db.collection(`users/${currentUser.uid}/items`).where('genreValue', '==', 'アウター');
     // メモリストのデータをsnapshotに入れている
     let unsubcrive = () => {};
 
@@ -71,8 +71,21 @@ export default function HomeScreen(props) {
           horizontal
           style={styles.filter}
         >
-          <TouchableOpacity style={styles.filterItem}>
-            <Text style={styles.selected}>全て</Text>
+          <TouchableOpacity
+            style={styles.filterItem}
+            onPress={() => {
+              navigation.navigate('ホーム');
+            }}
+          >
+            <Text style={styles.filterText}>全て</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.filterItem}
+            onPress={() => {
+              navigation.navigate('Outers');
+            }}
+          >
+            <Text style={[styles.selected]}>アウター</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.filterItem}
@@ -89,14 +102,6 @@ export default function HomeScreen(props) {
             }}
           >
             <Text style={styles.filterText}>ボトムス</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.filterItem}
-            onPress={() => {
-              navigation.navigate('Outers');
-            }}
-          >
-            <Text style={styles.filterText}>アウター</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.filterItem}
@@ -133,10 +138,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  notSelected: {
+    color: 'grey',
+  },
   filterContainer: {
     height: 40,
     zIndex: 3,
-    marginLeft: 20,
+    marginLeft: 10,
     marginTop: 40,
     marginBottom: 10,
   },
@@ -144,7 +152,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   filterItem: {
-    marginRight: 20,
+    marginRight: 30,
   },
   selected: {
     fontSize: 17,

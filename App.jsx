@@ -8,15 +8,23 @@ import firebase from 'firebase';
 import LoginScreen from './src/screens/LoginScreen';
 import SignupScreen from './src/screens/SignupScreen';
 import HomeScreen from './src/screens/HomeScreen';
-import CordeListScreen from './src/screens/CordeListScreen';
-import ColumnScreen from './src/screens/ColumnScreen';
+// import CordeListScreen from './src/screens/CordeListScreen';
+// import ColumnScreen from './src/screens/ColumnScreen';
 import LogoutButton from './src/components/LogoutButton';
 import ItemCreateScreen from './src/screens/ItemCreateScreen';
+import ItemDetailScreen from './src/screens/ItemDetailScreen';
+import ItemEditScreen from './src/screens/ItemEditScreen';
+import ItemDetailScreen2 from './src/screens/2ItemDetailScreen';
+
+import Tops from './src/components/Tops';
+import Bottoms from './src/components/Bottoms';
+import Outer from './src/components/Outer';
+import Shoes from './src/components/Shoes';
+import Anothers from './src/components/Anothers';
+// import Items from './src/components/Items';
 // import ColumnScreen from './src/screens/ColumnScreen';
 
 // import ListCreateScreen from './src/screens/ListCreateScreen';
-// import ListEditScreen from './src/screens/ListEditScreen';
-
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -52,7 +60,7 @@ function Main(props) {
           tabBarIcon: 'home',
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="コーデ"
         component={CordeListScreen}
         options={{
@@ -65,20 +73,21 @@ function Main(props) {
         options={{
           tabBarIcon: 'text',
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }
+
 export default function App() {
   return (
     <PaperProvider>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Create"
+          initialRouteName="Login"
           screenOptions={{
             headerStyle: { backgroundColor: '#467FD3' },
             headerTitleStyle: { color: '#ffffff' },
-            headerTitle: 'MemoApp',
+            headerTitle: 'D-closet',
             headerTintColor: '#ffffff',
             headerBackTitle: 'Back',
             gestureEnabled: true,
@@ -89,7 +98,15 @@ export default function App() {
           <Stack.Screen name="Signup" component={SignupScreen} />
           <Stack.Screen name="Main" component={Main} />
           <Stack.Screen name="Create" component={ItemCreateScreen} />
-          {/* <Stack.Screen name="Edit" component={Main} /> */}
+          <Stack.Screen name="Detail" component={ItemDetailScreen} />
+          <Stack.Screen name="Edit" component={ItemEditScreen} />
+          <Stack.Screen name="Detail2" component={ItemDetailScreen2} />
+
+          <Stack.Screen name="Tops" component={Tops} />
+          <Stack.Screen name="Bottoms" component={Bottoms} />
+          <Stack.Screen name="Outers" component={Outer} />
+          <Stack.Screen name="Shoes" component={Shoes} />
+          <Stack.Screen name="Anothers" component={Anothers} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

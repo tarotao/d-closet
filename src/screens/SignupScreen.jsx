@@ -17,13 +17,13 @@ export default function SignupScreen(props) {
       .then(() => {
         navigation.reset({
           index: 0,
-          routes: [{ name: 'List' }],
+          routes: [{ name: 'Main' }],
         });
       })
       .catch((error) => {
         const errorMsg = translateErrors(error.code);
         Alert.alert(errorMsg.title, errorMsg.description);
-    });
+      });
   }
 
   return (
