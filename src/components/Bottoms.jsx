@@ -12,6 +12,8 @@ import { IconButton } from 'react-native-paper';
 import firebase from 'firebase';
 import Items from './Items';
 import { translateErrors } from '../utils';
+import LogoutButton from './LogoutButton';
+
 // import Loading from '../components/Loading';
 
 export default function Bottoms(props) {
@@ -24,7 +26,11 @@ export default function Bottoms(props) {
   // navigation.setOptions({
   //   headerRight: () => <LogoutButton />,
   // });
-
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <LogoutButton />,
+    });
+  }, []);
   useEffect(() => {
     const db = firebase.firestore();
     const { currentUser } = firebase.auth();
@@ -74,7 +80,7 @@ export default function Bottoms(props) {
           <TouchableOpacity
             style={styles.filterItem}
             onPress={() => {
-              navigation.navigate('ホーム');
+              navigation.navigate('Home');
             }}
           >
             <Text style={styles.filterText}>全て</Text>
@@ -161,7 +167,7 @@ const styles = StyleSheet.create({
   },
   plusButton: {
     position: 'absolute',
-    backgroundColor: '#467FD3',
+    backgroundColor: '#20b2aa',
     width: 64,
     height: 64,
     borderRadius: 32,

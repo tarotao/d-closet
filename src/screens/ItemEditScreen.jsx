@@ -64,7 +64,7 @@ export default function ItemEditScreen(props) {
             ref.delete().catch(() => {
               Alert.alert('削除に失敗しました');
             });
-            navigation.navigate('Main');
+            navigation.navigate('Home');
           },
           style: 'destructive',
         },
@@ -89,7 +89,7 @@ export default function ItemEditScreen(props) {
       .then(() => {
         navigation.reset({
           index: 0,
-          routes: [{ name: 'Main' }],
+          routes: [{ name: 'Home' }],
         });
       })
       .catch((error) => {
@@ -218,10 +218,19 @@ export default function ItemEditScreen(props) {
         color="white"
         style={styles.checkButton}
         onPress={submitData}
-        // disabled={true}
       />
       <ScrollView>
         <View style={styles.inner}>
+          <View style={styles.deleteContainar}>
+            <Button
+              onPress={() => { deleteItem(id); }}
+              mode="contained"
+              style={styles.deleteBtn}
+              color="red"
+            >
+              削除する
+            </Button>
+          </View>
           <View>
             <View style={styles.Title}>
               <Text style={styles.titleText}>画像※</Text>
@@ -271,6 +280,7 @@ export default function ItemEditScreen(props) {
                     <Button
                       mode="contained"
                       onPress={submitGenre}
+                      color="#467FD3"
                     >
                       決定
                     </Button>
@@ -312,6 +322,7 @@ export default function ItemEditScreen(props) {
                       onPress={priceConfirm}
                       mode="contained"
                       style={styles.modalButton}
+                      color="#467FD3"
                     >
                       決定
                     </Button>
@@ -403,6 +414,7 @@ export default function ItemEditScreen(props) {
                       onPress={memoConfirm}
                       mode="contained"
                       style={styles.modalButton}
+                      color="#467FD3"
                     >
                       決定
                     </Button>
@@ -419,13 +431,6 @@ export default function ItemEditScreen(props) {
               />
             </View>
             <Text style={[styles.inputText, styles.memoText]}>{submitMemo}</Text>
-            <Button
-              onPress={() => { deleteItem(id); }}
-              mode="contained"
-              style
-            >
-              削除する
-            </Button>
           </View>
         </View>
       </ScrollView>
@@ -456,7 +461,7 @@ const styles = StyleSheet.create({
   },
   checkButton: {
     position: 'absolute',
-    backgroundColor: '#467FD3',
+    backgroundColor: '#20b2aa',
     width: 64,
     height: 64,
     borderRadius: 32,
@@ -641,5 +646,15 @@ const styles = StyleSheet.create({
 
   memoText: {
     height: 300,
+  },
+  deleteContainar: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+
+  },
+  deleteBtn: {
+    width: 100,
+    fontSize: 40,
+    marginVertical: 30,
   },
 });

@@ -39,12 +39,6 @@ export default function Items(props) {
         }}
       >
         <Image style={styles.itemImage} source={{ uri: item.image }} />
-        {/* <TouchableOpacity
-            style={styles.memoDelite}
-            onPress={() => { deleteMemo(item.id); }}
-          >
-            <Icon name="delete" size={24} color="#808080" />
-          </TouchableOpacity> */}
       </TouchableOpacity>
 
     );

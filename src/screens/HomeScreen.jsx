@@ -13,6 +13,7 @@ import firebase from 'firebase';
 import Items from '../components/Items';
 import { translateErrors } from '../utils';
 // import Loading from '../components/Loading';
+import LogoutButton from '../components/LogoutButton';
 
 export default function HomeScreen(props) {
   const { navigation } = props;
@@ -21,15 +22,17 @@ export default function HomeScreen(props) {
   const handlePress = () => {
     navigation.navigate('Create');
   };
-  // navigation.setOptions({
-  //   headerRight: () => <LogoutButton />,
-  // });
 
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <LogoutButton />,
+    });
+  }, []);
   useEffect(() => {
     const db = firebase.firestore();
     const { currentUser } = firebase.auth();
     // .orderByで追加された順でメモを保存する
-    const ref = db.collection(`users/${currentUser.uid}/items`);
+    const ref = db.collection(`users/${currentUser.uid}/items`).orderBy('updatedAt', 'desc');
     // メモリストのデータをsnapshotに入れている
     let unsubcrive = () => {};
 
@@ -156,7 +159,7 @@ const styles = StyleSheet.create({
   },
   plusButton: {
     position: 'absolute',
-    backgroundColor: '#467FD3',
+    backgroundColor: '#20b2aa',
     width: 64,
     height: 64,
     borderRadius: 32,

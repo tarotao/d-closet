@@ -22,7 +22,7 @@ export default function LoginScreen(props) {
       if (user) {
         navigation.reset({
           index: 0,
-          routes: [{ name: 'Main' }],
+          routes: [{ name: 'Home' }],
         });
       } else {
         setLoading(false);
@@ -38,7 +38,7 @@ export default function LoginScreen(props) {
         // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
         navigation.reset({
           index: 0,
-          routes: [{ name: 'Main' }],
+          routes: [{ name: 'Home' }],
         });
       })
       .catch((error) => {
@@ -54,14 +54,14 @@ export default function LoginScreen(props) {
     <View style={styles.container}>
       <Loading isLoading={isLoading} />
       <View style={styles.inner}>
-        <Text style={styles.title}>Log In</Text>
+        <Text style={styles.title}>ログイン</Text>
         <TextInput
           style={styles.input}
           value={email}
           onChangeText={(text) => { setEmail(text); }}
           autoCapitalize="none"
           keyboardType="email-address"
-          placeholder="Email Address"
+          placeholder="メールアドレス"
           textContentType="emailAddress"
         />
         <TextInput
@@ -69,17 +69,17 @@ export default function LoginScreen(props) {
           value={password}
           onChangeText={(text) => { setPassword(text); }}
           autoCapitalize="none"
-          placeholder="Pssword"
+          placeholder="パスワード"
           secureTextEntry
           textContentType="password"
         />
         <Button
-          label="submit"
+          label="送信"
           /* eslint-disable-next-line */
           onPress={handlePress}
         />
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Not registered?</Text>
+          {/* <Text style={styles.footerText}>Not registered?</Text> */}
           <TouchableOpacity onPress={() => {
             navigation.reset({
               index: 0,
@@ -87,7 +87,7 @@ export default function LoginScreen(props) {
             });
           }}
           >
-            <Text style={styles.footerLink}>Sign up here!</Text>
+            <Text style={styles.footerLink}>アカウントを作成する</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -48,7 +48,7 @@ export default function ItemCreateScreen(props) {
       .then(() => {
         navigation.reset({
           index: 0,
-          routes: [{ name: 'Main' }],
+          routes: [{ name: 'Home' }],
         });
       })
       .catch((error) => {
@@ -230,6 +230,7 @@ export default function ItemCreateScreen(props) {
                     <Button
                       mode="contained"
                       onPress={submitGenre}
+                      color="#467FD3"
                     >
                       決定
                     </Button>
@@ -271,6 +272,7 @@ export default function ItemCreateScreen(props) {
                       onPress={priceConfirm}
                       mode="contained"
                       style={styles.modalButton}
+                      color="#467FD3"
                     >
                       決定
                     </Button>
@@ -362,6 +364,7 @@ export default function ItemCreateScreen(props) {
                       onPress={memoConfirm}
                       mode="contained"
                       style={styles.modalButton}
+                      color="#467FD3"
                     >
                       決定
                     </Button>
@@ -391,7 +394,7 @@ const styles = StyleSheet.create({
   },
   checkButton: {
     position: 'absolute',
-    backgroundColor: '#467FD3',
+    backgroundColor: '#20b2aa',
     width: 64,
     height: 64,
     borderRadius: 32,

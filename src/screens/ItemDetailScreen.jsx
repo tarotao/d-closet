@@ -47,7 +47,7 @@ export default function ItemDetailScreen(props) {
     navigation.navigate(
       'Edit',
       {
-        id: 'oZMyFAiuubhWlwjdv1H2',
+        id,
         wImage: value.image,
         wGenre: value.genre,
         wBuyDate: value.buyDate,
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   },
   checkButton: {
     position: 'absolute',
-    backgroundColor: '#467FD3',
+    backgroundColor: '#20b2aa',
     width: 64,
     height: 64,
     borderRadius: 32,

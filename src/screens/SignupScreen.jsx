@@ -17,7 +17,7 @@ export default function SignupScreen(props) {
       .then(() => {
         navigation.reset({
           index: 0,
-          routes: [{ name: 'Main' }],
+          routes: [{ name: 'Home' }],
         });
       })
       .catch((error) => {
@@ -29,14 +29,14 @@ export default function SignupScreen(props) {
   return (
     <View style={styles.container}>
       <View style={styles.inner}>
-        <Text style={styles.title}>Sign Up</Text>
+        <Text style={styles.title}>アカウントを作成</Text>
         <TextInput
           style={styles.input}
           value={email}
           onChangeText={(text) => { setEmail(text); }}
           autoCapitalize="none"
           keyboardType="email-address"
-          placeholder="Email Address"
+          placeholder="メールアドレス"
           textContentType="emailAddress"
         />
         <TextInput
@@ -44,7 +44,7 @@ export default function SignupScreen(props) {
           value={password}
           onChangeText={(text) => { setPassword(text); }}
           autoCapitalize="none"
-          placeholder="Pssword"
+          placeholder="パスワード"
           secureTextEntry
           textContentType="password"
         />
@@ -54,7 +54,7 @@ export default function SignupScreen(props) {
           onPress={handlePress}
         />
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Already registered?</Text>
+          {/* <Text style={styles.footerText}>ログインする</Text> */}
           <TouchableOpacity onPress={() => {
             navigation.reset({
               index: 0,
@@ -62,7 +62,7 @@ export default function SignupScreen(props) {
             });
           }}
           >
-            <Text style={styles.footerLink}>Log In.</Text>
+            <Text style={styles.footerLink}>ログインする</Text>
           </TouchableOpacity>
         </View>
       </View>

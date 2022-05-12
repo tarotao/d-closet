@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 // import { StyleSheet, Text, View } from 'react-native';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+// import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -10,11 +10,11 @@ import SignupScreen from './src/screens/SignupScreen';
 import HomeScreen from './src/screens/HomeScreen';
 // import CordeListScreen from './src/screens/CordeListScreen';
 // import ColumnScreen from './src/screens/ColumnScreen';
-import LogoutButton from './src/components/LogoutButton';
+// import LogoutButton from './src/components/LogoutButton';
 import ItemCreateScreen from './src/screens/ItemCreateScreen';
 import ItemDetailScreen from './src/screens/ItemDetailScreen';
 import ItemEditScreen from './src/screens/ItemEditScreen';
-import ItemDetailScreen2 from './src/screens/2ItemDetailScreen';
+// import ItemDetailScreen2 from './src/screens/2ItemDetailScreen';
 
 import Tops from './src/components/Tops';
 import Bottoms from './src/components/Bottoms';
@@ -25,7 +25,7 @@ import Anothers from './src/components/Anothers';
 // import ColumnScreen from './src/screens/ColumnScreen';
 
 // import ListCreateScreen from './src/screens/ListCreateScreen';
-const Tab = createMaterialBottomTabNavigator();
+// const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const firebaseConfig = {
@@ -41,42 +41,42 @@ if (typeof window !== 'undefined' && !firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-function Main(props) {
-  const { navigation } = props;
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => <LogoutButton />,
-    });
-  }, []);
+// function Main(props) {
+//   const { navigation } = props;
+//   useEffect(() => {
+//     navigation.setOptions({
+//       headerRight: () => <LogoutButton />,
+//     });
+//   }, []);
 
-  return (
-    <Tab.Navigator
-      initialRouteName="ホーム"
-    >
-      <Tab.Screen
-        name="ホーム"
-        component={HomeScreen}
-        options={{
-          tabBarIcon: 'home',
-        }}
-      />
-      {/* <Tab.Screen
-        name="コーデ"
-        component={CordeListScreen}
-        options={{
-          tabBarIcon: 'hanger',
-        }}
-      />
-      <Tab.Screen
-        name="コラム"
-        component={ColumnScreen}
-        options={{
-          tabBarIcon: 'text',
-        }}
-      /> */}
-    </Tab.Navigator>
-  );
-}
+//   return (
+//     <Tab.Navigator
+//       initialRouteName="ホーム"
+//     >
+//       <Tab.Screen
+//         name="ホーム"
+//         component={HomeScreen}
+//         options={{
+//           tabBarIcon: 'home',
+//         }}
+//       />
+//       <Tab.Screen
+//         name="コーデ"
+//         component={CordeListScreen}
+//         options={{
+//           tabBarIcon: 'hanger',
+//         }}
+//       />
+//       <Tab.Screen
+//         name="コラム"
+//         component={ColumnScreen}
+//         options={{
+//           tabBarIcon: 'text',
+//         }}
+//       />
+//     </Tab.Navigator>
+//   );
+// }
 
 export default function App() {
   return (
@@ -85,7 +85,7 @@ export default function App() {
         <Stack.Navigator
           initialRouteName="Login"
           screenOptions={{
-            headerStyle: { backgroundColor: '#467FD3' },
+            headerStyle: { backgroundColor: '#20b2aa' },
             headerTitleStyle: { color: '#ffffff' },
             headerTitle: 'D-closet',
             headerTintColor: '#ffffff',
@@ -96,11 +96,11 @@ export default function App() {
         >
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Signup" component={SignupScreen} />
-          <Stack.Screen name="Main" component={Main} />
+          {/* <Stack.Screen name="Main" component={Main} /> */}
           <Stack.Screen name="Create" component={ItemCreateScreen} />
           <Stack.Screen name="Detail" component={ItemDetailScreen} />
           <Stack.Screen name="Edit" component={ItemEditScreen} />
-          <Stack.Screen name="Detail2" component={ItemDetailScreen2} />
+          <Stack.Screen name="Home" component={HomeScreen} />
 
           <Stack.Screen name="Tops" component={Tops} />
           <Stack.Screen name="Bottoms" component={Bottoms} />

@@ -13,6 +13,7 @@ import firebase from 'firebase';
 import Items from './Items';
 import { translateErrors } from '../utils';
 // import Loading from '../components/Loading';
+import LogoutButton from './LogoutButton';
 
 export default function Shoes(props) {
   const { navigation } = props;
@@ -24,7 +25,11 @@ export default function Shoes(props) {
   // navigation.setOptions({
   //   headerRight: () => <LogoutButton />,
   // });
-
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <LogoutButton />,
+    });
+  }, []);
   useEffect(() => {
     const db = firebase.firestore();
     const { currentUser } = firebase.auth();
@@ -74,7 +79,7 @@ export default function Shoes(props) {
           <TouchableOpacity
             style={styles.filterItem}
             onPress={() => {
-              navigation.navigate('ホーム');
+              navigation.navigate('Home');
             }}
           >
             <Text style={styles.filterText}>全て</Text>
@@ -130,9 +135,6 @@ export default function Shoes(props) {
 }
 
 const styles = StyleSheet.create({
-  // itemContainer: {
-  //   marginTop: 50,
-  // },
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -162,7 +164,7 @@ const styles = StyleSheet.create({
   },
   plusButton: {
     position: 'absolute',
-    backgroundColor: '#467FD3',
+    backgroundColor: '#20b2aa',
     width: 64,
     height: 64,
     borderRadius: 32,
